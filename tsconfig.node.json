@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["vite.config.ts"]
+}
+// 找不到文件“d:/Microsoft VS Code/resources/app/extensions/node_modules/typescript/lib/lib.d.ts”。
+//   程序包含该文件是因为:
+//     目标 "es3" 的默认库
