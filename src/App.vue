@@ -1,96 +1,68 @@
 <template>
-  
-  <GlobalHeader :user=currentUser ></GlobalHeader>
 
-  <ColumnList :list="testData"/>
 
-  <ValidateForm @form-submit="onsubmit">
-      <div class="mb-3 ">
-        <label class="form-label">邮箱地址</label>
-        <validate-input :rules="emailRules" 
-        placeholder="请输入邮箱地址"
-        type="text"
-        ref="inputRef"
-        v-model="emailRef"></validate-input>
-      </div>
-      <div class="mb-3 ">
-        <label class="form-label">密码</label>
-        <validate-input :rules="passwordRules"  
-        placeholder="请输入密码"
-        type="password"
-        v-model="passwdRef"></validate-input>
-      </div>
-    <template v-slot:submit>
-      <button type="submit" class="btn btn-danger">提交</button>
-    </template>
-  </ValidateForm>
+  <!-- <message  type="error" :message="userStore.error.message" v-if="userStore.error.status"></message> -->
+  <Loader  v-if="userStore.isLoading" text="努力加载中"></Loader>
+  <GlobalHeader :user=userStore.user :title="titledata"></GlobalHeader>
+  <div class="main">
+    <router-view></router-view>
+    <footer class="text-center py-4 text-secondary  mt-6">
+        <small>
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item">© 2023 者也专栏</li>
+            <li class="list-inline-item">课程</li>
+            <li class="list-inline-item">文档</li>
+            <li class="list-inline-item">联系</li>
+            <li class="list-inline-item">更多</li>
+          </ul>
+        </small>
+    </footer>
+  </div>
 
-  
 </template>
 
 
 <script setup lang="ts">
-import {  ref } from 'vue';
-import ColumnList, {ColumnProps} from './components/ColumnList.vue'
-import GlobalHeader, {UserProps} from './components/GlobarHeader.vue'
-import ValidateInput, {RulesProps}   from './components/ValidateInput.vue' 
-import ValidateForm from './components/ValidateForm.vue'
+// import createMessage from './components/CreateMessage'
+// import message from './components/MessageItem.vue'
+import Loader from './components/LoaderItem.vue'
+import GlobalHeader from './components/GlobarHeader.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-const emailRef = ref()
-const passwdRef = ref()
-const testData: ColumnProps[] = [
-  {
-    id: 1,
-    title: 'test1的专栏',
-    description: '这是的test1专栏，有一段非常有意思的简介，可以更新一下欧',
-    avatar: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100'
-  },
-  {
-    id: 2,
-    title: 'test2的专栏',
-    description: '这是的test2专栏，有一段非常有意思的简介，可以更新一下欧'
-  },
-  {
-    id: 3,
-    title: 'test1的专栏',
-    description: '这是的test1专栏，有一段非常有意思的简介，可以更新一下欧',
-    avatar: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100'
-  },
-  {
-    id: 4,
-    title: 'test2的专栏',
-    description: '这是的test2专栏，有一段非常有意思的简介，可以更新一下欧',
-    avatar: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100'
-  },
-  {
-    id: 5,
-    title: 'test1的专栏',
-    description: '这是的test1专栏，有一段非常有意思的简介，可以更新一下欧',
-    avatar: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100'
-  },
-  {
-    id: 6,
-    title: 'test2的专栏',
-    description: '这是的test2专栏，有一段非常有意思的简介，可以更新一下欧',
-    avatar: 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5ee22dd58b3c4520912b9470.jpg?x-oss-process=image/resize,m_pad,h_100,w_100'
-  }
-]
-const currentUser: UserProps = {
-  isLogin: true,
-  name: '李鑫'
+import { useUserStore } from './stores';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+import { getImgFromOSS } from '../helper';
+const userStore = useUserStore()
+const route = useRoute()
+const cid = computed(() => route.params.id)
+const pid = computed(() => route.params.pid)
 
-}
-const emailRules: RulesProps = [
-  { type: 'required', message: '电子邮箱地址不能为空' },
-  { type: 'email', message: '请输入正确的电子邮箱格式' }
-]
-const passwordRules: RulesProps = [
-{ type: 'required', message: '密码不能为空' },
-]
-const onsubmit = (e:boolean) => {
-  console.log(e);
-}
-
+const titledata = computed(() => {
+  if (route.path == '/create') return {title: 'Create'}
+  if (route.path == '/') return {title: '发现精彩'}
+  return userStore.getcolumnsById(cid.value as string) || userStore.getPostById(pid.value as string)
+})
+console.log();
 </script>
 
-
+<style>
+.main {
+  padding: 0 5rem;
+  padding-top: 90px;
+  background-color: #ecf0f3 !important; 
+}
+body {
+  background-color: #ecf0f3 !important; 
+}
+.circle {
+    position: absolute;
+    width: 40%;
+    padding-top: 40%;
+    border-radius: 50%;
+    background-color: #ecf0f3;
+    box-shadow: inset 8px 8px 12px #b8bec7, inset -8px -8px 12px #fff;
+    /* bottom: -60%;
+    left: -60%;
+    transition: 1.25s; */
+}
+</style>

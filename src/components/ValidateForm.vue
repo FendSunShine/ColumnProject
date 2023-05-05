@@ -4,7 +4,7 @@
         <slot></slot>
         
         
-        <div class="submit-area" style="display: inline-block;" @click.prevent="submitForm">
+        <div class="submit-area text-center " style="" @click.prevent="submitForm">
             <slot name="submit" >
                 <button type="submit" class="btn btn-primary">提交</button>
             </slot>
@@ -45,6 +45,7 @@ export default defineComponent({
         const callback = (func: ValidateFunc) => {
             funcArr.push(func)
         }
+
         // 添加监听
         emitter.on('form-item-created', callback)
         onUnmounted(() => {
