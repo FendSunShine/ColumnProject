@@ -31,7 +31,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useUserStore } from './stores';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
-import { getImgFromOSS } from '../helper';
 const userStore = useUserStore()
 const route = useRoute()
 const cid = computed(() => route.params.id)

@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useUserStore } from './stores'
 import 'easymde/dist/easymde.min.css'
 const app = createApp(App)
+console.log(app);
 const pinia = createPinia()
 app.use(pinia)
 app.use(router)

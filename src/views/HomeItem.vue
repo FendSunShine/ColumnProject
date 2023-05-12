@@ -31,6 +31,7 @@
     
 </template>
 <script setup lang="ts">
+import { HandleImgUrl } from '../../helper';
 import {throttle} from 'lodash'
 import {  computed, onBeforeMount, onUnmounted, ref } from 'vue';
 import ColumnList from '../components/ColumnList.vue'

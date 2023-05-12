@@ -3,7 +3,7 @@
         <div v-for="column in columnList" :key="column._id" class="col-4 mb-4">
             <div class="card h-100" >
                 <div class="card-body text-cener">
-                    <img :src="column.avatar.url"
+                    <img :src="HandleImgUrl(column.avatar.url)"
                     :ref="'img' + column._id" 
                     :alt="column.title" class=" rounded-circle border border-light my-3">                    <h5 class="card-title">{{column.title}}</h5>
                     <p class="card-text text-start">{{column.description}}</p>
@@ -21,7 +21,7 @@
 import { computed, defineComponent, PropType } from 'vue'
 import avatarNo from '../assets/column.jpg'
 import {ColumnProps} from '../stores'
-import { getImgFromOSS } from '../../helper'
+import {HandleImgUrl} from '../../helper'
 export default defineComponent({ 
     name: 'ColumnList',
     props:{
@@ -43,7 +43,8 @@ export default defineComponent({
         })
         // zhic
         return {
-            columnList
+            columnList,
+            HandleImgUrl
         }
     }                   
 

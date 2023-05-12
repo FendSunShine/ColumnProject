@@ -3,6 +3,7 @@ interface CheckCondition {
     size?:number
 }
 type ErrorType = 'size' | 'format' | null
+
 export function beforeUploadCheck(file: File, condition:CheckCondition){
     const { format, size } = condition
     const isValidFormat = format ? format.includes(file.type) : true
@@ -45,21 +46,28 @@ export function ObjToArr<T>(obj: {[key: string] : T}){
 // console.log(ObjToArr(ArrToObj(testData)));
 
 // 这是一个代理图片html img标签获得OSS的函数
-
-export function getImgFromOSS(
-    imgUrl:string, 
-    imgDom:HTMLImageElement, 
-    imgUrlDomain = 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/', 
-    proxyDomain:'/GetImg/'){
-    // 获取图片并转化为URL对象
-    // 由于浏览器同源策略，后端也不是我家的，需要配置代理
-    imgUrl = imgUrl.replace(imgUrlDomain, proxyDomain)
-    fetch(imgUrl)
-    .then(response => response.blob())
-    .then(blob => URL.createObjectURL(blob))
-    .then(url => {
-    imgDom.src = url;
-    })
-    .catch(error => console.log(error));
-
+// export function getImgFromOSS(
+//     imgUrl:string, 
+//     imgDom:HTMLImageElement, 
+//     imgUrlDomain = 'http://vue-maker.oss-cn-hangzhou.aliyuncs.com/', 
+//     proxyDomain:'/GetImg/'){
+//     // 获取图片并转化为URL对象
+//     // 由于浏览器同源策略，后端也不是我家的，需要配置代理
+//     imgUrl = imgUrl.replace(imgUrlDomain, proxyDomain)
+//     fetch(imgUrl)
+//     .then(response => response.blob())
+//     .then(blob => URL.createObjectURL(blob))
+//     .then(url => {
+//     imgDom.src = url;
+//     })
+//     .catch(error => console.log(error));
+// }
+export function HandleImgUrl(url: string | undefined){
+    if (process.env.NODE_ENV === 'production') {
+            // 生产环境
+            return url && url.replace('http://vue-maker.oss-cn-hangzhou.aliyuncs.com', '/apiImg')
+        } else {
+            // 开发环境
+            return url
+        }
 }

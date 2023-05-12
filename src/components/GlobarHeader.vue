@@ -18,7 +18,7 @@
                 <div v-if="!title" class="center navbar-brand text-primary border-title"  to="/">者也专栏</div>
                 <div v-else class="center text-center">
                     <router-link  class=" navbar-brand text-primary border-title" to="/" >{{ title.title }}</router-link>
-                    <img :src="title?.avatar?.url" alt="">
+                    <img :src="HandleImgUrl(title?.avatar?.url)" alt="">
                 </div>
                 <ul v-if="!user.isLogin" class=" right list-inline mb-0">
                     <li class="list-inline-item"><router-link  to="/login" class="btn btn-outline-light my-2 ">登陆</router-link></li>
@@ -36,7 +36,7 @@
 import { defineComponent, onMounted, PropType, ref } from 'vue';
 import DropDown from './DropDown.vue'
 import { UserProps} from '../stores'
-
+import { HandleImgUrl } from '../../helper';
 export default defineComponent({
     name: 'GlobarHeader',
     components:{DropDown},
@@ -66,7 +66,8 @@ export default defineComponent({
 })
         })
         return {
-            header
+            header,
+            HandleImgUrl
         }
         
     }

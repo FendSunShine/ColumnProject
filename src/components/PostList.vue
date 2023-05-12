@@ -49,7 +49,7 @@
       <div class="card-body">
         <h4><router-link :to='{name:"postdetail", params:{pid: post._id}} '>{{post.title}}</router-link></h4>
         <div class="row my-3 align-items-center imgdiv">
-            <img v-if="post.image && typeof post.image != 'string'" :src="post.image.url" alt="">
+            <img v-if="post.image && typeof post.image != 'string'" :src="HandleImgUrl(post.image.url)" alt="">
             <p>{{post.excerpt}}</p>
         </div>
         <span class="text-muted">{{post.createdAt}}</span>
@@ -61,6 +61,7 @@
 <script lang="ts" setup>
 import { PropType, onMounted } from 'vue';
 import {PostProps} from '../stores'
+import { HandleImgUrl } from '../../helper';
 defineProps({
   list:{
     type:Array as PropType<PostProps[]>

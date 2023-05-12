@@ -7,7 +7,7 @@
         </ModalComponent>
         <div class="post-detail-page">
         <article class="w-75 mx-auto mb-5 pb-3" v-if="currentPost">
-            <img :src="currentImageUrl" alt="currentPost.title" 
+            <img :src="HandleImgUrl(currentImageUrl)" alt="currentPost.title" 
             class="rounded-lg img-fluid my-4" v-if="currentImageUrl">
             <h2 class="mb-4">{{currentPost.title}}</h2>
             <div class="user-profile-component border-top 
@@ -44,6 +44,7 @@ import { computed, ref } from 'vue';
 import { UserProps } from '../stores';
 import createMessage from '../components/CreateMessage';
 import router from '../routers';
+import { HandleImgUrl } from '../../helper';
 const ModalIsVisibble = ref(false)
 const route = useRoute()
 const pid = route.params.pid as string

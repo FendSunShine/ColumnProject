@@ -19,7 +19,7 @@
         </template>
         <template #uploaded="UploadProps">
             <div class="uploaded-area">
-                <img :src="UploadProps.updataFile.value ? UploadProps.updataFile.value.url : UploadProps.updataFile.url">
+                <img :src="HandleImgUrl(UploadProps.updataFile.value ? UploadProps.updataFile.value.url : UploadProps.updataFile.url)">
                 <h3>点击重新上传</h3>
         </div>
         </template>
@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { HandleImgUrl } from '../../helper';
 import {  ref,onBeforeMount, reactive, computed, watch } from 'vue';
 import ValidateInput, { RulesProps } from '../components/ValidateInput.vue'
 import easyMDE,{Options} from 'easymde'

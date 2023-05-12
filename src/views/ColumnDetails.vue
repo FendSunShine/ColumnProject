@@ -2,7 +2,7 @@
     <div class="column-detail-page w-75 mx-auto">
         <div class="column-info row column-top  mb-4 border-bottom pb-4 align-items-center" v-if="column">
             <div class="col-3 text-center">
-                <img :src="column.avatar?.url" :alt="column.title" class="rounded-circle border"
+                <img :src="HandleImgUrl(column.avatar?.url)" :alt="column.title" class="rounded-circle border"
                     style="width: 100px; height: 100px;">
             </div>
             <div class="col-9">
@@ -41,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import { HandleImgUrl } from '../../helper';
 import PostList from '../components/PostList.vue'
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../stores';
