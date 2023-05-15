@@ -1,5 +1,7 @@
 # ColumnProject
 
+这是一个分享知识的博客网站，具备查看博客专栏与编写个人博客发布的主要功能。前端采用 Vue3 与 TypeScript，后端采用真实的 api 进行响应请求。
+
 ## Project setup
 
 ```
