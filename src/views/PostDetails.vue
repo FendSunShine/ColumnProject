@@ -62,9 +62,9 @@ const currentImageUrl = computed(() => {
 const currentHtml = computed(() => {
     if (!currentPost.value.content) return ''
     if(currentPost.value.isHTML) {
-        return currentPost.value.content.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        return currentPost.value.content
     } else {
-        return marked.parse(currentPost.value.content.replace(/</g, '&lt;').replace(/>/g, '&gt;'))
+        return marked.parse(currentPost.value.content)
     }
 })
 const showEditArea = computed(() => {
